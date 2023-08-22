@@ -1,0 +1,42 @@
+[
+    {
+        "_id": "6399907dad4d0e755dd0f6e1",
+        "strandName": "Indigenous Ways",
+        "parentStrand": null,
+        "isActive": true,
+        "isDeleted": false,
+        "__v": 0
+    },
+    {
+        "_id": "63999095ad4d0e755dd0f6e3",
+        "strandName": "Euro-Science",
+        "parentStrand": null,
+        "isActive": true,
+        "isDeleted": false,
+        "__v": 0
+    },
+    {
+        "_id": "6399949fad4d0e755dd0f736",
+        "strandName": "Innovation",
+        "parentStrand": "63999095ad4d0e755dd0f6e3",
+        "isActive": true,
+        "isDeleted": false,
+        "__v": 0
+    },
+    {
+        "_id": "639994abad4d0e755dd0f738",
+        "strandName": "Experiment",
+        "parentStrand": "63999095ad4d0e755dd0f6e3",
+        "isActive": true,
+        "isDeleted": false,
+        "__v": 0
+    },
+    {
+        "_id": "639994b9ad4d0e755dd0f73a",
+        "strandName": "Study",
+        "parentStrand": "63999095ad4d0e755dd0f6e3",
+        "isActive": true,
+        "isDeleted": false,
+        "__v": 0
+    }
+]

@@ -1,0 +1,164 @@
+Project Description
+* Each year in January a Science Fair is held with approximately 100 projects
+* Each project has one or more users
+* Judges log into the system on their iPads and see projects available to be judged
+* A judge will go to a particular table (project) and review the presentation. They will then enter a score on their iPad for that project.
+    * Four things are entered on this form:
+        * Project code
+        * Project Type
+        * Score(s) (see scoring section below)
+        * Typed in feedback (textarea)
+* Once a project has been judged 3 times, no more judges are able to judge that project. That project is no longer shows up in the list of available projects. (Need a way to refresh this on the judges screen).
+* Admins need to approve feedback / scores before they are submitted
+* There are approximately 2 strands with approximately 4 categories each. For a total of 8 competitions. Each project is placed in a specific category in a specific strand. 
+* Once scores are entered, a report is generated with 1st place, 2nd place, and 3rd place winners for each competition.
+* 
+Roles:
+
+SuperAdmin:
+* Has admin role
+* Has judge role
+
+Admin
+* Can add Science Fair
+    * Name (Required)
+    * Date (Required)
+    * Location (Required)
+    * Description (Optional)
+    * Image (Optional)
+* Can add admins and school admins
+* Can add students (linked to Science Fair)
+    * First name (Required)
+    * Last name (Required)
+    * School id (Required - foreign key)
+    * Grade (Required – Possible values: K, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, Adult)
+* Can add project (Linked to Science Fair)
+    * School id (Foreign Key - required)
+    * Project code (three digit unique number. Ex. 100, 101, 102, 103, etc.). Project code is unique to science fair. Automatically assigned, but can be manually edited by admin. Generally always starts at 100 for each science fair. (Required)
+    * Project name (Required)
+    * Project description (Required)
+    * Project Category (Required)
+    * Project Strand (Required)
+    * Project Sub-Strand (Required for Euro-Science strand, NULL for Indigenous Ways strand)
+* Can add students to project
+    * Project (foreign key - Required)
+    * Student (foreign key – required)
+* Can add judges
+    * First name (required)
+    * Last name (required)
+    * Username (required – unique)
+    * Passcode (required)
+    * Proficient languages (optional)
+
+School Admin
+* Can add students for own school (linked to Science Fair)
+    * First name (required)
+    * Last name (required)
+    * School id (required – foreign key)
+    * Grade (Required)
+* Can add project for own school (Linked to Science Fair)
+    * School id (Required – foreign key)
+    * Project code (three digit unique number. Ex. 100, 101, 102, 103, etc.). Project code is unique to science fair. Automatically assigned, and hidden from school admin, but can be manually edited by full admin. (Required)
+    * Project name (Required)
+    * Project description (Required)
+    * Project Category (Required)
+    * Project Strand (Required)
+    * Project Sub-Strand (Required for Euro-Science strand, NULL for Indigenous Ways strand)
+* Can add students to project for own school
+    * Project (Required – foreign key) 
+    * Student (Required – foreign key)
+
+Judge
+* Can evaluate a project
+    * Score1 (Required for Euro-Science)
+    * Score2 (Required for Euro-Science)
+    * Score3 (Required for both Euro-Science and Indigenous Ways Strand)
+    * Feedback (Required)
+    * Once score is submitted, it will be added to the database with a status of “needs_approval” (Required)
+* Once a project is submitted by a judge it will have status of “needs_approval”. An admin cannot change scores of the project, but an admin can set status to “approved”, “needs_approval”, or “rejected”
+* Any project score that is marked as “approved” or “needs_approval” counts towards the total count of 3.
+* Any project score that is marked as “rejected” is not counted towards the total count of 3 judges. 3 other judges will still need to judge this project.
+* Any project score that is marked as “approved” will be counted towards the final score calculation.
+* When an admin views the list of project scores, projects scores that are approved will have a green indicator, project scores still needing to be approved will have a yellow indicator, and project scores that are rejected will have a red indicator. This page will need to be kept up to date so that an admin will see new project scores coming in to approve.
+
+
+Pages:
+* Admin: Login Page (for admin and judges)
+* Admin: Science Fair (CRUD)
+* Admin: Students (CRUD)
+* Admin: Project (CRUD)
+* Admin: Students/Project (CRUD)
+* Admin: Judge (CRUD)
+* Admin: Results (R with U for approval)
+* Admin: Top Scores (R to view top scores)
+* School Admin: Students (CRUD)
+* School Admin: Project (CRUD)
+* School Admin: Students/Project (CRUD)
+* Judge: Feedback page (CRU)
+* Public: Main Page with Science Fair Details, logo, pictures, etc. (R)
+
+* In case of a tie:
+    * Manual intervention
+
+
+Form – web-based 
+Back-end – database driven
+Viewable data / results – web page
+
+Output:
+
+* Shows winners per category (of 8 categories)
+* Start with Youth – in order of 3rd, 2nd, 1st
+    * Euroscience youngest
+    * Indigenous youngest
+* Youth, Junior, Intermediate, Senior
+* CSV Export
+
+Scores:
+
+Scores are calculated as follows:
+
+* If project is Indigenous Ways a single score is taken from 0 to 100
+* If project is Euro-Science (Experiment, Innovation, or Study) score is taken as follows:
+    * Score_1: 0 to 8 points
+    * Score_2: 0 to 8 points
+    * Score_3: 0 to 20 points
+    * Calculation is: (Score_1 * 5 + Score_2 * 5 + Score 3) for a total of 100 max points
+* Remember 3 judges will judge each project, so the average is taken between all three judges. Scores will be rounded to nearest whole number. (We should be careful here in case a project is accidentally judged 4 times. If so, the average of all 4 are taken, etc.)
+* The top three winners of each of the 8 categories will be taken. If there are ties for the top three places, more winners may be shown.
+* A separate page will show ALL averaged scores sorted by the 8 different categories.
+
+
+School Table:
+	School ID (Required)
+	School Code (Required) – usually what is seen to the user as references in other tables
+	School Name (Required)
+	Location (Required)
+
+Categories, Strand, Sub-Strand
+
+Categories
+* Assigned to a project designating grade/age group
+* Possible Values: Youth (Grades 4 & 5), Junior (Grades 6 & 7), Intermediate (Grades 8 & 9), Senior (Grades 10, 11, & 12)
+
+Strand:
+* Assigned to a project indicating type of project
+* Possible Values: Indigenous Ways, Euro-Science
+Sub-Strand
+* Assigned to a project indicating sub-type of project. This only applies to Euro-Science strand. It does not apply to the Indigenous Ways strand.
+* Possible Values: Innovation, Experiment, Study
+
+Top Scores
+* Eight groupings are available. Each grouping will have its own set of scores from which the top scores are taken from.
+* Top Score groups are a taken by combining the 4 categories and 2 strands as follows:
+    * Youth – Euro-Science
+    * Youth – Indigenous Ways
+    * Junior – Euro-Science
+    * Junior – Indigenous Ways
+    * Intermediate – Euro-Science
+    * Intermediate – Indigenous Ways
+    * Senior – Euro-Science
+    * Senior – Indigenous Ways
+
+Judge Form
+* The judge form will be different depending on the Strand and sub-Strand. See mockup 200 for example.

@@ -1,0 +1,34 @@
+[
+    {
+        "_id": "63985257f6a8f1283ab5a69e",
+        "name": "Youth",
+        "description": "Grades 4 & 5",
+        "isActive": true,
+        "isDeleted": false,
+        "__v": 0
+    },
+    {
+        "_id": "63985271f6a8f1283ab5a6a0",
+        "name": "Junior",
+        "description": "Grades 6 & 7",
+        "isActive": true,
+        "isDeleted": false,
+        "__v": 0
+    },
+    {
+        "_id": "63985280f6a8f1283ab5a6a2",
+        "name": "Intermediate",
+        "description": "Grades 8 & 9",
+        "isActive": true,
+        "isDeleted": false,
+        "__v": 0
+    },
+    {
+        "_id": "63985291f6a8f1283ab5a6a4",
+        "name": "Senior",
+        "description": "Grades 10, 11, & 12",
+        "isActive": true,
+        "isDeleted": false,
+        "__v": 0
+    }
+]
